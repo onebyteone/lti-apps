@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class LtiController extends Controller
 {
@@ -17,14 +18,13 @@ class LtiController extends Controller
             'course_id' => $request->input('custom_canvas_course_id'),
         ];
 
-        // Validar lógica simple (ejemplo)
-        if (str_contains($data['role'], 'Instructor')) {
-            $message = "Bienvenido, Profesor " . $data['name'] . ". Aquí está su panel de control.";
-        } else {
-            $message = "Hola, " . $data['name'] . ". Listo para aprender?";
-        }
+        // Determinar si es instructor
+        $isInstructor = str_contains($data['role'] ?? '', 'Instructor');
 
-        // Retornar una vista con estos datos
-        return view('lti.app', compact('data', 'message'));
+        // Retornar vista de Inertia con el chatbot
+        return Inertia::render('chatbot', [
+            'user' => $data,
+            'isInstructor' => $isInstructor,
+        ]);
     }
 }

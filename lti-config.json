@@ -1,0 +1,50 @@
+{
+  "title": "Chatbot con IA - Asistente del Curso",
+  "description": "Un chatbot inteligente que ayuda a los estudiantes a resolver preguntas sobre el contenido del curso utilizando IA (OpenAI GPT).",
+  "oidc_initiation_url": "https://tu-dominio.com/lti/login",
+  "target_link_uri": "https://tu-dominio.com/lti/launch",
+  "scopes": [
+    "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem",
+    "https://purl.imsglobal.org/spec/lti-ags/scope/result.readonly",
+    "https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly"
+  ],
+  "extensions": [
+    {
+      "platform": "canvas.instructure.com",
+      "settings": {
+        "platform": "canvas.instructure.com",
+        "placements": [
+          {
+            "placement": "course_navigation",
+            "message_type": "LtiResourceLinkRequest",
+            "target_link_uri": "https://tu-dominio.com/lti/launch",
+            "text": "Chatbot con IA",
+            "icon_url": "https://tu-dominio.com/icon.png",
+            "enabled": true,
+            "windowTarget": "_self"
+          },
+          {
+            "placement": "link_selection",
+            "message_type": "LtiDeepLinkingRequest",
+            "target_link_uri": "https://tu-dominio.com/lti/launch",
+            "text": "Chatbot con IA"
+          }
+        ]
+      },
+      "privacy_level": "public"
+    }
+  ],
+  "public_jwk": {
+    "kty": "RSA",
+    "e": "AQAB",
+    "use": "sig",
+    "kid": "chatbot-key-1",
+    "alg": "RS256",
+    "n": "REEMPLAZAR_CON_TU_CLAVE_PUBLICA_JWK_N"
+  },
+  "custom_fields": {
+    "canvas_user_id": "$Canvas.user.id",
+    "canvas_course_id": "$Canvas.course.id",
+    "canvas_enrollment_state": "$Canvas.enrollment.enrollmentState"
+  }
+}
