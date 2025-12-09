@@ -18,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            'lti/launch', // Nuestra ruta de entrada
+            'lti/launch',
+            'api/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
