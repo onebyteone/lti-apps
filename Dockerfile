@@ -8,7 +8,9 @@ RUN echo "SESSION_DRIVER=cookie" >> .env \
     && echo "SESSION_ENCRYPT=true" >> .env \
     && echo "CACHE_STORE=array" >> .env \
     && echo "QUEUE_CONNECTION=sync" >> .env \
-    && echo "LOG_CHANNEL=stderr" >> .env
+    && echo "LOG_CHANNEL=stderr" >> .env \
+    && echo "LTI_CONSUMER_KEY=chatbot-key-2024" >> .env \
+    && echo "LTI_SHARED_SECRET=supersecret123" >> .env
 RUN composer install --no-dev --optimize-autoloader && npm ci && npm run build
 RUN php artisan key:generate && php artisan config:clear && chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8080
