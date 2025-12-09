@@ -14,6 +14,12 @@ class CanvasService
     {
         $this->apiUrl = config('services.canvas.api_url');
         $this->apiToken = config('services.canvas.api_token');
+        
+        Log::info('CanvasService initialized', [
+            'api_url' => $this->apiUrl,
+            'has_token' => !empty($this->apiToken),
+            'token_length' => $this->apiToken ? strlen($this->apiToken) : 0,
+        ]);
     }
 
     /**
@@ -36,6 +42,8 @@ class CanvasService
             Log::error('Failed to fetch course modules', [
                 'course_id' => $courseId,
                 'status' => $response->status(),
+                'response_body' => $response->body(),
+                'request_url' => "{$this->apiUrl}/courses/{$courseId}/modules",
             ]);
 
             return [];

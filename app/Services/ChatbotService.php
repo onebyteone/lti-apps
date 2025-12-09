@@ -16,6 +16,12 @@ class ChatbotService
         $this->apiKey = config('services.openai.api_key');
         $this->model = config('services.openai.model', 'gpt-4o-mini');
         $this->canvasService = $canvasService;
+        
+        Log::info('ChatbotService initialized', [
+            'has_api_key' => !empty($this->apiKey),
+            'key_length' => $this->apiKey ? strlen($this->apiKey) : 0,
+            'model' => $this->model,
+        ]);
     }
 
     /**
@@ -79,6 +85,8 @@ class ChatbotService
             Log::error('OpenAI API error', [
                 'status' => $response->status(),
                 'body' => $response->body(),
+                'has_api_key' => !empty($this->apiKey),
+                'model' => $this->model,
             ]);
 
             return [

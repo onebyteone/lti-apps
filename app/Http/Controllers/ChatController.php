@@ -20,6 +20,16 @@ class ChatController extends Controller
      */
     public function chat(Request $request): JsonResponse
     {
+        \Log::info('Chat request received', [
+            'has_message' => $request->has('message'),
+            'has_course_id' => $request->has('course_id'),
+            'env_check' => [
+                'canvas_url' => config('services.canvas.api_url'),
+                'has_canvas_token' => !empty(config('services.canvas.api_token')),
+                'has_openai_key' => !empty(config('services.openai.api_key')),
+            ],
+        ]);
+
         $validated = $request->validate([
             'message' => 'required|string|max:1000',
             'course_id' => 'required|string',
