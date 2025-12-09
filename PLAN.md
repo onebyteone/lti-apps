@@ -35,26 +35,43 @@ curl -X POST 'https://canvas.instructure.com/api/v1/courses/12564766/external_to
 - [x] Endpoint `/lti/config.xml` con configuración XML
 - [x] Extracción de user_id, course_id, roles
 - [x] Configuración en `config/lti.php`
+- [x] Fix OAuth signature con X-Forwarded-Proto (HTTPS)
+- [x] Logging detallado para debugging
 
 ## 2. Backend Laravel
 
-### 2.1 Servicios Pendientes
+### 2.1 Controladores y Rutas ✅
+- [x] `LtiController` con OAuth 1.0 validation
+- [x] Rutas LTI simplificadas
+- [x] Manejo de sesiones con cookies
+
+### 2.2 Servicios Pendientes
 - [ ] `CanvasService`
   - Obtener módulos del curso
   - Obtener páginas del curso
   - Obtener asignaciones
-- [ ] `ChatbotService`
+- [ ] `ChatbotService` (o `ChatController`)
   - Integración con gpt-4o-mini
   - Context building desde contenido del curso
   - Manejo de conversaciones
+  - Endpoint `/api/chat` POST
 
-## 3. Frontend React/Inertia
-- [ ] Página del chatbot (`resources/js/pages/Chatbot.tsx`)
-- [ ] Componente de chat UI
+## 3. Frontend React/Inertia ✅
+- [x] Página del chatbot (`resources/js/pages/Chatbot.tsx`)
+- [x] Componente de chat UI
   - Input de usuario
   - Historial de mensajes
-  - Indicador de typing
-- [ ] Estado de conversación (React hooks)
+  - Indicador de typing (loading dots)
+- [x] Estado de conversación (React useState)
+- [x] Badge de rol (Instructor)
+- [x] Diseño responsive con Tailwind
+
+## 4. Próximos Pasos (v1.1)
+- [ ] Crear endpoint `/api/chat` 
+- [ ] Implementar `CanvasService` para obtener contenido del curso
+- [ ] Integrar OpenAI para respuestas inteligentes
+- [ ] Persistir conversaciones en BD (opcional)
+- [ ] Mejorar contexto del chatbot con datos del curso
 
 ## 4. Flujo de Datos
 ```
@@ -92,21 +109,30 @@ APP_URL=https://chatbot-test-lti-713107332501.us-central1.run.app ✓
 ```
 
 ## 8. Pruebas
-- [x] Test de autenticación LTI 1.1
+- [x] Test de autenticación LTI 1.1 (OAuth signature)
+- [x] Test de OAuth con HTTPS/proxy
+- [x] Test de renderizado de interfaz Chatbot
 - [ ] Test de Canvas API integration
 - [ ] Test de OpenAI responses
 - [ ] Test end-to-end del chatbot
 
 ## 9. Deploy en GCP Cloud Run ✅
 ```bash
-# Build & Deploy
-gcloud builds submit --tag gcr.io/aplicacionesnube-2025/mi-repo-lti/chatbot-test:v3
+# Build & Deploy (última versión: v7)
+gcloud builds submit --tag gcr.io/aplicacionesnube-2025/mi-repo-lti/chatbot-test:v7
 gcloud run deploy chatbot-test-lti \
-    --image gcr.io/aplicacionesnube-2025/mi-repo-lti/chatbot-test:v3 \
+    --image gcr.io/aplicacionesnube-2025/mi-repo-lti/chatbot-test:v7 \
     --platform managed \
     --region us-central1 \
     --allow-unauthenticated
 ```
+
+**Versiones:**
+- v1-v2: Configuración inicial
+- v3: Fix SESSION_DRIVER=cookie
+- v4-v5: Fix LTI consumer key
+- v6: Fix OAuth signature con HTTPS
+- v7: Agregado componente Chatbot.tsx ✅
 
 ## Diferencias LTI 1.1 vs LTI 1.3
 | Aspecto | LTI 1.1 | LTI 1.3 |
