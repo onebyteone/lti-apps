@@ -42,7 +42,11 @@ export default function Chatbot({ user, course }: ChatbotProps) {
         setIsLoading(true);
 
         try {
-            // TODO: Llamar al backend para obtener respuesta de OpenAI
+            const conversationHistory = messages.slice(-5).map(msg => ({
+                role: msg.role,
+                content: msg.content,
+            }));
+
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -52,6 +56,7 @@ export default function Chatbot({ user, course }: ChatbotProps) {
                 body: JSON.stringify({
                     message: input,
                     course_id: course.id,
+                    conversation_history: conversationHistory,
                 }),
             });
 

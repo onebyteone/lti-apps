@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'canvas' => [
+        'api_url' => env('CANVAS_API_URL', 'https://canvas.instructure.com/api/v1'),
+        'api_token' => env('CANVAS_API_TOKEN'),
+    ],
+
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+        'model' => env('OPENAI_MODEL', 'gpt-4o-mini'),
+    ],
+
 ];
