@@ -12,8 +12,17 @@ class LtiController extends Controller
      */
     public function launch(Request $request)
     {
+        // Log para debugging
+        \Log::info('LTI Launch Request', [
+            'method' => $request->method(),
+            'url' => $request->url(),
+            'consumer_key' => $request->input('oauth_consumer_key'),
+            'has_signature' => $request->has('oauth_signature'),
+        ]);
+
         // Validar OAuth 1.0 signature
         if (!$this->validateOAuthSignature($request)) {
+            \Log::error('OAuth validation failed');
             return response('Invalid OAuth signature', 403);
         }
 
@@ -35,6 +44,8 @@ class LtiController extends Controller
             'lti_user_email' => $userEmail,
             'lti_roles' => $roles,
         ]);
+
+        \Log::info('LTI Launch successful', ['user' => $userId, 'course' => $courseId]);
 
         // Renderizar interfaz del chatbot con Inertia
         return Inertia::render('Chatbot', [
@@ -59,6 +70,11 @@ class LtiController extends Controller
         $consumerKey = config('lti.consumer_key');
         $sharedSecret = config('lti.shared_secret');
 
+        \Log::info('OAuth Validation Config', [
+            'consumer_key' => $consumerKey,
+            'has_secret' => !empty($sharedSecret),
+        ]);
+
         // Verificar que tenemos consumer key
         $requestConsumerKey = $request->input('oauth_consumer_key');
         if ($requestConsumerKey !== $consumerKey) {
@@ -76,6 +92,13 @@ class LtiController extends Controller
             return false;
         }
 
+        // Obtener signature method (debe ser HMAC-SHA1)
+        $signatureMethod = $request->input('oauth_signature_method', 'HMAC-SHA1');
+        if ($signatureMethod !== 'HMAC-SHA1') {
+            \Log::error('Unsupported signature method', ['method' => $signatureMethod]);
+            return false;
+        }
+
         // Construir la base string para OAuth 1.0
         $method = $request->method();
         $url = $request->url();
@@ -87,8 +110,20 @@ class LtiController extends Controller
         // Ordenar parámetros alfabéticamente
         ksort($params);
         
-        // Construir query string
-        $paramString = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+        // Construir query string normalizado
+        $pairs = [];
+        foreach ($params as $key => $value) {
+            if (is_array($value)) {
+                sort($value);
+                foreach ($value as $v) {
+                    $pairs[] = rawurlencode($key) . '=' . rawurlencode($v);
+                }
+            } else {
+                $pairs[] = rawurlencode($key) . '=' . rawurlencode($value);
+            }
+        }
+        sort($pairs);
+        $paramString = implode('&', $pairs);
         
         // Construir base string
         $baseString = implode('&', [
@@ -101,18 +136,17 @@ class LtiController extends Controller
         $key = rawurlencode($sharedSecret) . '&';
         $signature = base64_encode(hash_hmac('sha1', $baseString, $key, true));
 
-        // Comparar signatures
-        $isValid = hash_equals($signature, $receivedSignature);
-        
-        if (!$isValid) {
-            \Log::error('OAuth signature mismatch', [
-                'expected' => $signature,
-                'received' => $receivedSignature,
-                'base_string' => $baseString,
-            ]);
-        }
+        // Log para debugging
+        \Log::info('OAuth Signature Calculation', [
+            'method' => $method,
+            'url' => $url,
+            'calculated_signature' => $signature,
+            'received_signature' => $receivedSignature,
+            'match' => hash_equals($signature, $receivedSignature),
+        ]);
 
-        return $isValid;
+        // Comparar signatures
+        return hash_equals($signature, $receivedSignature);
     }
 
     /**
