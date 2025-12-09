@@ -28,6 +28,12 @@ class ChatController extends Controller
                 'has_canvas_token' => !empty(config('services.canvas.api_token')),
                 'has_openai_key' => !empty(config('services.openai.api_key')),
             ],
+            'raw_env' => [
+                'CANVAS_API_TOKEN' => env('CANVAS_API_TOKEN') ? 'SET' : 'NOT SET',
+                'OPENAI_API_KEY' => env('OPENAI_API_KEY') ? 'SET' : 'NOT SET',
+                'CANVAS_API_TOKEN_length' => env('CANVAS_API_TOKEN') ? strlen(env('CANVAS_API_TOKEN')) : 0,
+                'OPENAI_API_KEY_length' => env('OPENAI_API_KEY') ? strlen(env('OPENAI_API_KEY')) : 0,
+            ],
         ]);
 
         $validated = $request->validate([
