@@ -12,6 +12,6 @@ RUN echo "SESSION_DRIVER=cookie" >> .env \
     && echo "LTI_CONSUMER_KEY=chatbot-key-2024" >> .env \
     && echo "LTI_SHARED_SECRET=supersecret123" >> .env
 RUN composer install --no-dev --optimize-autoloader && npm ci && npm run build
-RUN php artisan key:generate && php artisan config:clear && chown -R www-data:www-data storage bootstrap/cache
+RUN php artisan key:generate && chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8080
-CMD php artisan serve --host=0.0.0.0 --port=8080
+CMD php artisan config:clear && php artisan serve --host=0.0.0.0 --port=8080
