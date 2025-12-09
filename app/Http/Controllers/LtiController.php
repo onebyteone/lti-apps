@@ -167,26 +167,24 @@ class LtiController extends Controller
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <cartridge_basiclti_link xmlns="http://www.imsglobal.org/xsd/imslticc_v1p0"
-    xmlns:blti="http://www.imsglobal.org/xsd/imsbasiclti_v1p0"
-    xmlns:lticm="http://www.imsglobal.org/xsd/imslticm_v1p0"
-    xmlns:lticp="http://www.imsglobal.org/xsd/imslticp_v1p0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd
+    xmlns:blti = "http://www.imsglobal.org/xsd/imsbasiclti_v1p0"
+    xmlns:lticm ="http://www.imsglobal.org/xsd/imslticm_v1p0"
+    xmlns:lticp ="http://www.imsglobal.org/xsd/imslticp_v1p0"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd
     http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
+    <blti:launch_url>https://chatbot-test-lti-713107332501.us-central1.run.app/lti/launch</blti:launch_url>
     <blti:title>AI Chatbot</blti:title>
     <blti:description>Chatbot con IA para consultas del curso</blti:description>
-    <blti:launch_url>{$baseUrl}/lti/launch</blti:launch_url>
     <blti:extensions platform="canvas.instructure.com">
-        <lticm:property name="privacy_level">public</lticm:property>
-        <lticm:options name="course_navigation">
-            <lticm:property name="enabled">true</lticm:property>
-            <lticm:property name="text">AI Chatbot</lticm:property>
-            <lticm:property name="visibility">admins</lticm:property>
-        </lticm:options>
-        <lticm:property name="custom_canvas_user_id">\$Canvas.user.id</lticm:property>
-        <lticm:property name="custom_canvas_course_id">\$Canvas.course.id</lticm:property>
+      <lticm:property name="privacy_level">public</lticm:property>
+      <lticm:options name="course_navigation">
+        <lticm:property name="url">https://chatbot-test-lti-713107332501.us-central1.run.app/lti/launch</lticm:property>
+        <lticm:property name="text">AI Chatbot</lticm:property>
+        <lticm:property name="enabled">true</lticm:property>
+      </lticm:options>
     </blti:extensions>
 </cartridge_basiclti_link>
 XML;
