@@ -7,4 +7,9 @@ use App\Http\Controllers\LtiController;
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
-Route::post('/lti/launch', [LtiController::class, 'launch']);
+
+// LTI 1.3 Endpoints
+Route::get('/lti/config.json', [LtiController::class, 'config'])->name('lti.config');
+Route::get('/.well-known/jwks.json', [LtiController::class, 'jwks'])->name('lti.jwks');
+Route::post('/lti/login', [LtiController::class, 'login'])->name('lti.login');
+Route::post('/lti/launch', [LtiController::class, 'launch'])->name('lti.launch');
