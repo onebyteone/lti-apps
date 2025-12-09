@@ -101,7 +101,13 @@ class LtiController extends Controller
 
         // Construir la base string para OAuth 1.0
         $method = $request->method();
+        
+        // Usar la URL correcta - Cloud Run puede terminar SSL
+        // Necesitamos usar https:// si estamos detrás de un proxy
         $url = $request->url();
+        if ($request->header('X-Forwarded-Proto') === 'https') {
+            $url = str_replace('http://', 'https://', $url);
+        }
         
         // Obtener todos los parámetros excepto oauth_signature
         $params = $request->all();
@@ -140,6 +146,8 @@ class LtiController extends Controller
         \Log::info('OAuth Signature Calculation', [
             'method' => $method,
             'url' => $url,
+            'url_original' => $request->url(),
+            'x_forwarded_proto' => $request->header('X-Forwarded-Proto'),
             'calculated_signature' => $signature,
             'received_signature' => $receivedSignature,
             'match' => hash_equals($signature, $receivedSignature),
