@@ -1,0 +1,117 @@
+{
+    "course_id": "12564766",
+    "title": "Ensayo Argumentativo",
+    "free_form_criterion_comments": true,
+    "criteria": [
+      {
+        "description": "Tesis y Argumentación",
+        "points": 25,
+        "ratings": [
+          {
+            "description": "Excelente: Tesis clara, argumentos sólidos y bien fundamentados",
+            "points": 25
+          },
+          {
+            "description": "Bueno: Tesis presente, argumentos consistentes pero con mejoras posibles",
+            "points": 20
+          },
+          {
+            "description": "Suficiente: Tesis débil o argumentos poco desarrollados",
+            "points": 15
+          },
+          {
+            "description": "Insuficiente: Falta tesis o argumentos poco coherentes",
+            "points": 10
+          }
+        ]
+      },
+      {
+        "description": "Estructura y Organización",
+        "points": 20,
+        "ratings": [
+          {
+            "description": "Excelente: Estructura lógica, transiciones fluidas",
+            "points": 20
+          },
+          {
+            "description": "Bueno: Estructura clara con algunas transiciones abruptas",
+            "points": 15
+          },
+          {
+            "description": "Suficiente: Estructura presente pero poco cohesiva",
+            "points": 10
+          },
+          {
+            "description": "Insuficiente: Estructura desorganizada",
+            "points": 5
+          }
+        ]
+      },
+      {
+        "description": "Uso de Fuentes",
+        "points": 20,
+        "ratings": [
+          {
+            "description": "Excelente: Fuentes académicas relevantes, bien citadas",
+            "points": 20
+          },
+          {
+            "description": "Bueno: Fuentes confiables con citación correcta",
+            "points": 15
+          },
+          {
+            "description": "Suficiente: Pocas fuentes o citación inconsistente",
+            "points": 10
+          },
+          {
+            "description": "Insuficiente: Sin fuentes o citación incorrecta",
+            "points": 5
+          }
+        ]
+      },
+      {
+        "description": "Gramática y Estilo",
+        "points": 15,
+        "ratings": [
+          {
+            "description": "Excelente: Sin errores, estilo académico apropiado",
+            "points": 15
+          },
+          {
+            "description": "Bueno: Errores mínimos que no afectan comprensión",
+            "points": 12
+          },
+          {
+            "description": "Suficiente: Varios errores gramaticales o estilo informal",
+            "points": 8
+          },
+          {
+            "description": "Insuficiente: Múltiples errores que dificultan comprensión",
+            "points": 4
+          }
+        ]
+      },
+      {
+        "description": "Análisis Crítico",
+        "points": 20,
+        "ratings": [
+          {
+            "description": "Excelente: Análisis profundo con perspectivas múltiples",
+            "points": 20
+          },
+          {
+            "description": "Bueno: Análisis presente con algunas perspectivas",
+            "points": 15
+          },
+          {
+            "description": "Suficiente: Análisis superficial o unidimensional",
+            "points": 10
+          },
+          {
+            "description": "Insuficiente: Sin análisis crítico evidente",
+            "points": 5
+          }
+        ]
+      }
+    ]
+  }

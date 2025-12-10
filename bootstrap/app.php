@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(except: [
             'lti/launch',
+            'lti/grading/launch',
             'api/*',
         ]);
     })
